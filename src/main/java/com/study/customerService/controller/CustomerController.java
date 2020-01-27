@@ -3,11 +3,9 @@ package com.study.customerService.controller;
 import com.study.customerService.entity.Customer;
 import com.study.customerService.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -28,25 +26,6 @@ public class CustomerController {
         return "<h1> CustomerService </h1>";
     }
 
-    @GetMapping("/generateCustomer")
-    String createCustomer(@RequestParam final int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            m_repository.save(new Customer(m_firstNames[m_randomGen.nextInt(m_countNames)], m_lastNames[m_randomGen.nextInt(m_countNames)]));
-        }
-
-        return + count +" Customer wurden hinzugefügt!";
-    }
-
-    @GetMapping("/createCustomer")
-    String createCustomer(@RequestParam final String firstName,@RequestParam final String lastName)
-    {
-        m_repository.save(new Customer(firstName, lastName));
-        Customer l_customer = m_repository.findByFirstName(firstName);
-        return l_customer.toString() + " wurde erfolgreich der Datenbank hinzugefügt!";
-    }
-
     @GetMapping("/showDb")
     String showDb()
     {
@@ -55,5 +34,31 @@ public class CustomerController {
             l_string += customer.toString() + "<br>";
         }
         return l_string;
+    }
+
+    @PostMapping("/createCustomer")
+    void createCustomer(@RequestParam final String FN,@RequestParam final String LN,@RequestParam final String CN)
+    {
+        m_repository.save(new Customer(FN ,LN ,CN ));
+
+        System.out.println("Customer created: " + CN);
+    }
+
+    @GetMapping("/getCID")
+    String getCID(@RequestParam final String CN)
+    {
+        Customer l_customer = m_repository.findByCN(CN);
+
+        System.out.println("send CID: " + l_customer.id + " From " + l_customer.CN);
+        return l_customer.id;
+    }
+
+    @GetMapping("/getCustomer")
+    Customer getCustomer(@RequestParam final String CID)
+    {
+        Customer l_customer = m_repository.findByCN(CID);
+
+        System.out.println("send Customer: " + l_customer.CN);
+        return l_customer;
     }
 }

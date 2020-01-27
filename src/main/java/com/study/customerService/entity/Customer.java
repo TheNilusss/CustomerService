@@ -9,19 +9,21 @@ public class Customer {
 
     public String firstName;
     public String lastName;
+    public String CN; //CustomerName
 
     public Customer() {}
 
-    public Customer(String firstName, String lastName) {
+    public Customer(String firstName, String lastName,String CN) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.CN = CN;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Customer[id=%s, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
+                "Customer[id=%s, firstName='%s', lastName='%s', CustomerName='%s']",
+                id, firstName, lastName,CN);
     }
 
 }
