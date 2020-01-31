@@ -9,21 +9,14 @@ public class Customer {
 
     public String firstName;
     public String lastName;
-    public String CN; //CustomerName
+    public String email;
 
-    public Customer() {}
+    public Customer() {
+    }
 
-    public Customer(String firstName, String lastName,String CN) {
+    public Customer(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.CN = CN;
+        this.email = email;
     }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Customer[id=%s, firstName='%s', lastName='%s', CustomerName='%s']",
-                id, firstName, lastName,CN);
-    }
-
 }
